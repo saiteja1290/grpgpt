@@ -4,7 +4,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Group ChatGPT with Gemini",
+  title: "GroupGPT",
   description: "Collaborative chat application using Gemini API",
 };
 

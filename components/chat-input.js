@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 
-export default function ChatInput({ roomId, username }) {
+export default function ChatInput({ roomId, username, onNewMessage }) {
     const [message, setMessage] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
@@ -25,8 +25,10 @@ export default function ChatInput({ roomId, username }) {
                 });
 
                 if (response.ok) {
+                    const { userMessage, aiMessage } = await response.json();
+                    onNewMessage(userMessage);
+                    onNewMessage(aiMessage);
                     setMessage("");
-                    // The chat messages will update automatically due to polling in chat-messages.js
                 } else {
                     console.error("Failed to send message");
                 }

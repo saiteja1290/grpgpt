@@ -1,32 +1,36 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 export default function ChatMessages({ roomId }) {
     const [messages, setMessages] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const fetchMessages = async () => {
-            setLoading(true);
-            try {
-                const response = await fetch(`/api/chat?roomId=${roomId}`);
-                const data = await response.json();
-                setMessages(data.messages);
-            } catch (error) {
-                console.error("Error fetching messages:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
+    const fetchMessages = useCallback(async () => {
+        try {
+            const response = await fetch(`/api/chat?roomId=${roomId}`);
+            const data = await response.json();
+            setMessages(data.messages);
+        } catch (error) {
+            console.error("Error fetching messages:", error);
+        } finally {
+            setLoading(false);
+        }
+    }, [roomId]);
 
+    useEffect(() => {
         fetchMessages();
 
-        // Set up polling for new messages every 5 seconds
-        const intervalId = setInterval(fetchMessages, 5000);
+        // Set up polling for new messages every 30 seconds
+        const intervalId = setInterval(fetchMessages, 30000);
 
         return () => clearInterval(intervalId);
-    }, [roomId]);
+    }, [roomId, fetchMessages]);
+
+    // Function to add new messages without fetching all messages
+    const addNewMessage = useCallback((newMessage) => {
+        setMessages((prevMessages) => [...prevMessages, newMessage]);
+    }, []);
 
     if (loading) {
         return <div>Loading messages...</div>;

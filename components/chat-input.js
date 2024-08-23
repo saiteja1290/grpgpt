@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 
-export default function ChatInput({ roomId }) {
+export default function ChatInput({ roomId, username }) {
     const [message, setMessage] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
@@ -20,7 +20,7 @@ export default function ChatInput({ roomId }) {
                     body: JSON.stringify({
                         roomId,
                         content: message,
-                        sender: "User", // In a real app, this would be the authenticated user's name
+                        sender: username,
                     }),
                 });
 

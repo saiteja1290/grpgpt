@@ -6,7 +6,7 @@ export async function GET(request) {
     const { searchParams } = new URL(request.url);
     const roomId = searchParams.get("roomId");
 
-    const messages = getRoomMessages(roomId);
+    const messages = await getRoomMessages(roomId);
 
     return NextResponse.json({ messages });
 }
@@ -14,7 +14,7 @@ export async function GET(request) {
 export async function POST(request) {
     const { roomId, content, sender } = await request.json();
 
-    const userMessage = addMessage(roomId, {
+    const userMessage = await addMessage(roomId, {
         id: Date.now().toString(),
         content,
         sender,
@@ -24,7 +24,7 @@ export async function POST(request) {
     // Generate a response using Gemini API
     const aiResponseContent = await generateResponse(content);
 
-    const aiMessage = addMessage(roomId, {
+    const aiMessage = await addMessage(roomId, {
         id: (Date.now() + 1).toString(),
         content: aiResponseContent,
         sender: "AI",

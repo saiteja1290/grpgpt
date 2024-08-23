@@ -4,21 +4,33 @@ import { useEffect, useState } from "react";
 
 export default function ChatMessages({ roomId }) {
     const [messages, setMessages] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchMessages = async () => {
-            const response = await fetch(`/api/chat?roomId=${roomId}`);
-            const data = await response.json();
-            setMessages(data.messages);
+            setLoading(true);
+            try {
+                const response = await fetch(`/api/chat?roomId=${roomId}`);
+                const data = await response.json();
+                setMessages(data.messages);
+            } catch (error) {
+                console.error("Error fetching messages:", error);
+            } finally {
+                setLoading(false);
+            }
         };
 
         fetchMessages();
 
-        // Set up polling for new messages every 2 seconds
-        const intervalId = setInterval(fetchMessages, 2000);
+        // Set up polling for new messages every 5 seconds
+        const intervalId = setInterval(fetchMessages, 5000);
 
         return () => clearInterval(intervalId);
     }, [roomId]);
+
+    if (loading) {
+        return <div>Loading messages...</div>;
+    }
 
     return (
         <div className="space-y-4">

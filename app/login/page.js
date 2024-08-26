@@ -1,13 +1,39 @@
-"use client"
-import { useRouter } from 'next/navigation'; // Use next/navigation in the app directory
+"use client";
+import { useRouter } from 'next/navigation'; 
+import { useState } from 'react';
 
 export default function Login() {
   const router = useRouter();
+  const [error, setError] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle login logic here
-    console.log("Logging in...");
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        console.log('Login successful, token:', data.token);
+
+        // Redirect to the home page after successful login
+        router.push('/home');
+      } else {
+        const data = await res.json();
+        setError(data.error || 'Failed to log in.');
+      }
+    } catch (err) {
+      console.error('Error:', err);
+      setError('An error occurred during login.');
+    }
   };
 
   return (
@@ -16,9 +42,7 @@ export default function Login() {
 
       <form onSubmit={handleSubmit} className="w-full max-w-sm space-y-4">
         <div>
-          <label htmlFor="email" className="block text-sm font-medium">
-            Email
-          </label>
+          <label htmlFor="email" className="block text-sm font-medium">Email</label>
           <input
             type="email"
             id="email"
@@ -27,9 +51,7 @@ export default function Login() {
           />
         </div>
         <div>
-          <label htmlFor="password" className="block text-sm font-medium">
-            Password
-          </label>
+          <label htmlFor="password" className="block text-sm font-medium">Password</label>
           <input
             type="password"
             id="password"
@@ -37,6 +59,7 @@ export default function Login() {
             required
           />
         </div>
+        {error && <p className="text-red-500">{error}</p>}
         <button
           type="submit"
           className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"

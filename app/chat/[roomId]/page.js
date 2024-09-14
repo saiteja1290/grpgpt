@@ -4,6 +4,7 @@ import { useParams } from "next/navigation";
 import { useState, useEffect, useCallback } from "react";
 import ChatMessages from "@/components/chat-messages";
 import ChatInput from "@/components/chat-input";
+import GitHubLink from "@/components/github-link";
 
 export default function ChatRoom() {
     const params = useParams();
@@ -35,6 +36,7 @@ export default function ChatRoom() {
                 <h1 className="text-2xl">Room: {roomId}</h1>
                 <p>Logged in as: {username}</p>
             </header>
+            <GitHubLink roomId={roomId} />
             <main className="flex-grow overflow-auto p-4">
                 <ChatMessages roomId={roomId} messages={messages} setMessages={setMessages} />
             </main>

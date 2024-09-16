@@ -14,7 +14,7 @@
     "bcryptjs": "^2.4.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
-    "framer-motion": "^11.3.31",
+    "framer-motion": "^11.5.4",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.435.0",
     "mini-svg-data-uri": "^1.4.4",

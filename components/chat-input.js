@@ -41,12 +41,12 @@ export default function ChatInput({ roomId, username, onNewMessage }) {
     };
 
     return (
-        <div className="flex gap-2">
+        <div className="flex gap-1">
             <Textarea
                 placeholder="Type your message..."
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                className="flex-grow"
+                className="flex-grow bg-gray-800 p-4 border-black text-white"
             />
             <Button onClick={handleSendMessage} disabled={isLoading}>
                 {isLoading ? "Sending..." : "Send"}

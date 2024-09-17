@@ -69,7 +69,7 @@ export default function ChatMessages({ roomId }) {
     return (
         <div className="space-y-4">
             {messages.map((message) => (
-                <div key={message.id} className="bg-gray-100 p-4 rounded-lg">
+                <div key={message.id} className="bg-gray-800 p-4 rounded-lg text-white">
                     <p className="font-bold">{message.sender}</p>
                     <div>{renderMessageContent(message.content)}</div>
                     <p className="text-sm text-gray-500">

@@ -31,8 +31,8 @@ export default function ChatRoom() {
     }
 
     return (
-        <div className="flex flex-col h-screen">
-            <header className="bg-gray-800 text-white p-4">
+        <div className="flex flex-col h-screen bg-black">
+            <header className="bg-black text-white p-4">
                 <h1 className="text-2xl">Room: {roomId}</h1>
                 <p>Logged in as: {username}</p>
             </header>

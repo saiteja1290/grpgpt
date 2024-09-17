@@ -36,23 +36,26 @@ export default function GitHubLink({ roomId }) {
     };
 
     return (
-        <div className="flex flex-col gap-2 mb-4">
+        <div className="flex flex-col gap-2 mb-4 bg-black p-4">
             <Input
                 placeholder="GitHub Owner"
                 value={owner}
                 onChange={(e) => setOwner(e.target.value)}
+                className='bg-gray-800 border-black text-white'
             />
             <Input
                 placeholder="GitHub Repo"
                 value={repo}
                 onChange={(e) => setRepo(e.target.value)}
+                className='bg-gray-800 border-black text-white'
             />
             <Input
                 placeholder="Branch (default: main)"
                 value={branch}
                 onChange={(e) => setBranch(e.target.value)}
+                className='bg-gray-800 border-black text-white'
             />
-            <Button onClick={handleLinkRepo} disabled={loading}>
+            <Button onClick={handleLinkRepo} disabled={loading} className='bg-gray-800'>
                 {loading ? 'Linking...' : 'Link GitHub Repo'}
             </Button>
         </div>
